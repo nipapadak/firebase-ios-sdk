@@ -276,19 +276,6 @@ static void (^reportSentCallback)(void);
   FIRCLSDebugLog(@"Root: %@", [_fileManager rootPath]);
 #endif
 
-  if ([self.dataArbiter isLegacyDataCollectionKeyInPlist]) {
-    FIRCLSErrorLog(@"Found legacy data collection key in app's Info.plist: "
-                   @"firebase_crashlytics_collection_enabled");
-    FIRCLSErrorLog(@"Please update your Info.plist to use the new data collection key: "
-                   @"FirebaseCrashlyticsCollectionEnabled");
-    FIRCLSErrorLog(@"The legacy data collection Info.plist value could be overridden by "
-                   @"calling: [Fabric with:...]");
-    FIRCLSErrorLog(@"The new value can be overridden by calling: [[FIRCrashlytics "
-                   @"crashlytics] setCrashlyticsCollectionEnabled:<isEnabled>]");
-
-    return [FBLPromise resolvedWith:@NO];
-  }
-
   if (![_fileManager createReportDirectories]) {
     return [FBLPromise resolvedWith:@NO];
   }
@@ -502,6 +489,20 @@ static void (^reportSentCallback)(void);
 
   if (self.appIDModel.bundleID.length == 0) {
     FIRCLSErrorLog(@"An application must have a valid bundle identifier in its Info.plist");
+    return NO;
+  }
+
+
+  if ([self.dataArbiter isLegacyDataCollectionKeyInPlist]) {
+    FIRCLSErrorLog(@"Found legacy data collection key in app's Info.plist: "
+                   @"firebase_crashlytics_collection_enabled");
+    FIRCLSErrorLog(@"Please update your Info.plist to use the new data collection key: "
+                   @"FirebaseCrashlyticsCollectionEnabled");
+    FIRCLSErrorLog(@"The legacy data collection Info.plist value could be overridden by "
+                   @"calling: [Fabric with:...]");
+    FIRCLSErrorLog(@"The new value can be overridden by calling: [[FIRCrashlytics "
+                   @"crashlytics] setCrashlyticsCollectionEnabled:<isEnabled>]");
+
     return NO;
   }
 
