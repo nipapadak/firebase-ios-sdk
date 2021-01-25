@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-- (void)registerAnalyticsEventListener;
+- (void)registerAnalyticsListener;
 
 @end
 

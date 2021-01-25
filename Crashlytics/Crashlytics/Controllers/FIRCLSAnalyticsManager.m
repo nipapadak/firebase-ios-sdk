@@ -37,7 +37,7 @@ static NSString *FIRCLSFirebaseAnalyticsEventLogFormat = @"$A$:%@";
   return self;
 }
 
-- (void)registerAnalyticsEventListener {
+- (void)registerAnalyticsListener {
   if (self.registeredAnalyticsEventListener) {
     return;
   }
