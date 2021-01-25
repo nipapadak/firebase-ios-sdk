@@ -41,6 +41,7 @@
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
 #import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
@@ -62,38 +63,11 @@
 
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportManager_Private.h"
 
-#import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
-#import "Interop/Analytics/Public/FIRAnalyticsInteropListener.h"
-
-#include "Crashlytics/Crashlytics/Helpers/FIRAEvent+Internal.h"
-#include "Crashlytics/Crashlytics/Helpers/FIRCLSFCRAnalytics.h"
-
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
 #else
 #import <AppKit/AppKit.h>
 #endif
-
-static NSString *FIRCLSFirebaseAnalyticsEventLogFormat = @"$A$:%@";
-
-@interface FIRCLSAnalyticsInteropListener : NSObject <FIRAnalyticsInteropListener> {
-}
-@end
-
-@implementation FIRCLSAnalyticsInteropListener
-
-- (void)messageTriggered:(NSString *)name parameters:(NSDictionary *)parameters {
-  NSDictionary *event = @{
-    @"name" : name,
-    @"parameters" : parameters,
-  };
-  NSString *json = FIRCLSFIRAEventDictionaryToJSON(event);
-  if (json != nil) {
-    FIRCLSLog(FIRCLSFirebaseAnalyticsEventLogFormat, json);
-  }
-}
-
-@end
 
 /**
  * A FIRReportAction is used to indicate how to handle unsent reports.
@@ -168,6 +142,8 @@ typedef NSNumber FIRCLSWrappedBool;
 @property(nonatomic, strong) FIRCLSSettingsManager *settingsManager;
 
 @property(nonatomic, strong) GDTCORTransport *googleTransport;
+
+@property(nonatomic, strong) FIRCLSAnalyticsManager *analyticsManager;
 
 @end
 
@@ -476,7 +452,7 @@ static void (^reportSentCallback)(void);
 
   [self setupStateNotifications];
 
-  [self registerAnalyticsEventListener];
+  [self.analyticsManager registerAnalyticsEventListener];
 
   [self crashReportingSetupCompleted:mark];
 
@@ -714,17 +690,6 @@ static void (^reportSentCallback)(void);
   }
 
   return launchFailure;
-}
-
-#pragma mark -
-
-- (void)registerAnalyticsEventListener {
-  if (_registeredAnalyticsEventListener) {
-    return;
-  }
-  FIRCLSAnalyticsInteropListener *listener = [[FIRCLSAnalyticsInteropListener alloc] init];
-  [FIRCLSFCRAnalytics registerEventListener:listener toAnalytics:_analytics];
-  _registeredAnalyticsEventListener = YES;
 }
 
 #pragma mark - Notifications
