@@ -74,5 +74,4 @@
   return [_fileManager removeItemAtPath:[self launchFailureMarkerPath]];
 }
 
-
 @end

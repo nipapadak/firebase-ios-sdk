@@ -41,8 +41,8 @@
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
 #import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSNotificationManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSNotificationManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
@@ -51,9 +51,9 @@
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSLogger.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarker.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSymbolResolver.h"
-#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarker.h"
 #import "Crashlytics/Crashlytics/Operations/Reports/FIRCLSProcessReportOperation.h"
 
 #include "Crashlytics/Crashlytics/Components/FIRCLSGlobals.h"
@@ -212,19 +212,19 @@ static void (^reportSentCallback)(void);
                                                            googleAppID:self.googleAppID];
 
   _reportUploader = [[FIRCLSReportUploader alloc] initWithQueue:self.operationQueue
-                                               dataSource:self
-                                              fileManager:_fileManager
-                                                analytics:_analytics];
+                                                     dataSource:self
+                                                    fileManager:_fileManager
+                                                      analytics:_analytics];
 
   _analyticsManager = [[FIRCLSAnalyticsManager alloc] initWithAnalytics:_analytics];
   _notificationManager = [[FIRCLSNotificationManager alloc] init];
-  _existingReportManager = [[FIRCLSExistingReportManager alloc] initWithFileManager:_fileManager
-                                                                     operationQueue:_operationQueue
-                                                                     reportUploader:_reportUploader];
+  _existingReportManager =
+      [[FIRCLSExistingReportManager alloc] initWithFileManager:_fileManager
+                                                operationQueue:_operationQueue
+                                                reportUploader:_reportUploader];
 
   return self;
 }
-
 
 // This method returns a promise that is resolved with a wrapped FIRReportAction once the user has
 // indicated whether they want to upload currently cached reports.
@@ -333,7 +333,8 @@ static void (^reportSentCallback)(void);
     // TODO: This counting of the file system happens on the main thread. Now that some of the other
     // work below has been made async and moved to the dispatch queue, maybe we can move this code
     // to the dispatch queue as well.
-    int unsentReportsCount = [self.existingReportManager unsentReportsCountWithPreexisting:preexistingReportPaths];
+    int unsentReportsCount =
+        [self.existingReportManager unsentReportsCountWithPreexisting:preexistingReportPaths];
     if (unsentReportsCount > 0) {
       FIRCLSDebugLog(
           @"[Crashlytics:Crash] %d unsent reports are available. Checking for upload permission.",
@@ -357,7 +358,8 @@ static void (^reportSentCallback)(void);
 
                } else if (action == FIRCLSReportActionDelete) {
                  FIRCLSDebugLog(@"Deleting unsent reports.");
-                 [self.existingReportManager deleteUnsentReportsWithPreexisting:preexistingReportPaths];
+                 [self.existingReportManager
+                     deleteUnsentReportsWithPreexisting:preexistingReportPaths];
                } else {
                  FIRCLSErrorLog(@"Unknown report action: %d", action);
                }
@@ -421,7 +423,6 @@ static void (^reportSentCallback)(void);
     });
   }
 }
-
 
 - (BOOL)startCrashReporterWithProfilingMark:(FIRCLSProfileMark)mark
                                      report:(FIRCLSInternalReport *)report {
@@ -504,8 +505,8 @@ static void (^reportSentCallback)(void);
                        blockingSend:(BOOL)blockingSend {
   if (self.settings.collectReportsEnabled) {
     [self.existingReportManager processExistingReportPaths:preexistingReportPaths
-                 dataCollectionToken:token
-                            asUrgent:blockingSend];
+                                       dataCollectionToken:token
+                                                  asUrgent:blockingSend];
     [self.existingReportManager handleContentsInOtherReportingDirectoriesWithToken:token];
 
   } else {
@@ -524,8 +525,5 @@ static void (^reportSentCallback)(void);
   return [[FIRCLSInternalReport alloc] initWithPath:reportPath
                                 executionIdentifier:executionIdentifier];
 }
-
-
-
 
 @end

@@ -10,7 +10,6 @@
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSLogger.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
 
-
 @interface FIRCLSExistingReportManager ()
 
 @property(nonatomic, strong) FIRCLSFileManager *fileManager;
@@ -89,9 +88,9 @@
   if (urgent && [dataCollectionToken isValid]) {
     // We can proceed without the delegate.
     [self.reportUploader prepareAndSubmitReport:report
-                        dataCollectionToken:dataCollectionToken
-                                   asUrgent:urgent
-                             withProcessing:YES];
+                            dataCollectionToken:dataCollectionToken
+                                       asUrgent:urgent
+                                 withProcessing:YES];
     return;
   }
 
@@ -102,9 +101,9 @@
     dataCollectionToken:(FIRCLSDataCollectionToken *)dataCollectionToken {
   [self.operationQueue addOperationWithBlock:^{
     [self.reportUploader prepareAndSubmitReport:report
-                        dataCollectionToken:dataCollectionToken
-                                   asUrgent:NO
-                             withProcessing:YES];
+                            dataCollectionToken:dataCollectionToken
+                                       asUrgent:NO
+                                 withProcessing:YES];
   }];
 }
 
@@ -137,9 +136,9 @@
     for (NSString *path in processingPaths) {
       FIRCLSInternalReport *report = [FIRCLSInternalReport reportWithPath:path];
       [self.reportUploader prepareAndSubmitReport:report
-                          dataCollectionToken:token
-                                     asUrgent:NO
-                               withProcessing:NO];
+                              dataCollectionToken:token
+                                         asUrgent:NO
+                                   withProcessing:NO];
     }
   }];
 }
