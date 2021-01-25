@@ -20,7 +20,7 @@ static NSString *FIRCLSFirebaseAnalyticsEventLogFormat = @"$A$:%@";
   id<FIRAnalyticsInterop> _analytics;
 }
 
-@property (nonatomic, assign) BOOL registeredAnalyticsEventListener;
+@property(nonatomic, assign) BOOL registeredAnalyticsEventListener;
 
 @end
 
@@ -42,12 +42,10 @@ static NSString *FIRCLSFirebaseAnalyticsEventLogFormat = @"$A$:%@";
     return;
   }
 
-  [FIRCLSFCRAnalytics registerEventListener:self
-                                toAnalytics:_analytics];
+  [FIRCLSFCRAnalytics registerEventListener:self toAnalytics:_analytics];
 
   self.registeredAnalyticsEventListener = YES;
 }
-
 
 - (void)messageTriggered:(NSString *)name parameters:(NSDictionary *)parameters {
   NSDictionary *event = @{
