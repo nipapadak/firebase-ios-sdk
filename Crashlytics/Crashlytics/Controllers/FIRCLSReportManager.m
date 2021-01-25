@@ -424,6 +424,21 @@ static void (^reportSentCallback)(void);
   }
 }
 
+- (void)beginReportUploadsWithToken:(FIRCLSDataCollectionToken *)token
+             preexistingReportPaths:(NSArray *)preexistingReportPaths
+                       blockingSend:(BOOL)blockingSend {
+  if (self.settings.collectReportsEnabled) {
+    [self.existingReportManager processExistingReportPaths:preexistingReportPaths
+                                       dataCollectionToken:token
+                                                  asUrgent:blockingSend];
+    [self.existingReportManager handleContentsInOtherReportingDirectoriesWithToken:token];
+
+  } else {
+    FIRCLSInfoLog(@"Collect crash reports is disabled");
+    [self.existingReportManager deleteUnsentReportsWithPreexisting:preexistingReportPaths];
+  }
+}
+
 - (BOOL)startCrashReporterWithProfilingMark:(FIRCLSProfileMark)mark
                                      report:(FIRCLSInternalReport *)report {
   if (!report) {
@@ -499,23 +514,6 @@ static void (^reportSentCallback)(void);
 
   return YES;
 }
-
-- (void)beginReportUploadsWithToken:(FIRCLSDataCollectionToken *)token
-             preexistingReportPaths:(NSArray *)preexistingReportPaths
-                       blockingSend:(BOOL)blockingSend {
-  if (self.settings.collectReportsEnabled) {
-    [self.existingReportManager processExistingReportPaths:preexistingReportPaths
-                                       dataCollectionToken:token
-                                                  asUrgent:blockingSend];
-    [self.existingReportManager handleContentsInOtherReportingDirectoriesWithToken:token];
-
-  } else {
-    FIRCLSInfoLog(@"Collect crash reports is disabled");
-    [self.existingReportManager deleteUnsentReportsWithPreexisting:preexistingReportPaths];
-  }
-}
-
-#pragma mark - Reporting Lifecycle
 
 - (FIRCLSInternalReport *)setupCurrentReport:(NSString *)executionIdentifier {
   [self createLaunchFailureMarker];
