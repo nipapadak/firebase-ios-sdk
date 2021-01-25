@@ -8,8 +8,8 @@
 #import "FIRCLSNotificationManager.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
-#import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
 #import "Crashlytics/Crashlytics/Components/FIRCLSGlobals.h"
+#import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
@@ -18,7 +18,6 @@
 #endif
 
 @implementation FIRCLSNotificationManager
-
 
 - (void)registerNotificationListener {
   [self captureInitialNotificationStates];

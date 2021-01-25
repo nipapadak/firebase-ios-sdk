@@ -697,7 +697,6 @@ static void (^reportSentCallback)(void);
   return launchFailure;
 }
 
-
 #pragma mark - UITest Helpers
 
 // Used only for internal data collection E2E testing
