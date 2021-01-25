@@ -20,7 +20,7 @@
 @interface FIRCLSReportManager () <FIRCLSReportUploaderDataSource>
 
 @property(nonatomic, strong) NSOperationQueue *operationQueue;
-@property(nonatomic, readonly) FIRCLSReportUploader *uploader;
+@property(nonatomic, readonly) FIRCLSReportUploader *reportUploader;
 @property(nonatomic, strong) FIRCLSFileManager *fileManager;
 
 @end

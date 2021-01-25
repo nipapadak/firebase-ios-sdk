@@ -58,7 +58,7 @@
   return self;
 }
 
-- (FIRCLSReportUploader *)uploader {
+- (FIRCLSReportUploader *)reportUploader {
   return _uploader;
 }
 
