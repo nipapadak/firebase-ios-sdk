@@ -15,8 +15,8 @@
 #import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
@@ -133,7 +133,7 @@
         //      sendDataEvent is async (unless we're sending urgently).
         if (isCrash) {
           [FIRCLSAnalyticsManager logCrashWithTimeStamp:report.crashedOnDate.timeIntervalSince1970
-                                        toAnalytics:self->_analytics];
+                                            toAnalytics:self->_analytics];
         }
       });
 

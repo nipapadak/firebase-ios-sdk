@@ -15,8 +15,8 @@
 #import "FIRCLSAnalyticsManager.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
-#import "Crashlytics/Crashlytics/Helpers/FIRCLSInternalLogging.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRAEvent+Internal.h"
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSInternalLogging.h"
 
 #import "Interop/Analytics/Public/FIRAnalyticsInterop.h"
 #import "Interop/Analytics/Public/FIRAnalyticsInteropListener.h"
@@ -72,8 +72,7 @@ FOUNDATION_STATIC_INLINE NSNumber *timeIntervalInMillis(NSTimeInterval timeInter
     return;
   }
 
-  [self.analytics registerAnalyticsListener:self
-                                 withOrigin:kFIREventOriginCrash];
+  [self.analytics registerAnalyticsListener:self withOrigin:kFIREventOriginCrash];
 
   FIRCLSDeveloperLog(@"Crashlytics:Crash:Reports:Event",
                      "Registered Firebase Analytics event listener to receive breadcrumb logs");
@@ -106,13 +105,11 @@ FOUNDATION_STATIC_INLINE NSNumber *timeIntervalInMillis(NSTimeInterval timeInter
     kFIRParameterFatal : @(INT64_C(1))
   };
 
-  [analytics logEventWithOrigin:kFIREventOriginCrash
-                           name:kFIREventAppException
-                     parameters:params];
+  [analytics logEventWithOrigin:kFIREventOriginCrash name:kFIREventAppException parameters:params];
 }
 
-NSString* FIRCLSFIRAEventDictionaryToJSON(NSDictionary* eventAsDictionary) {
-  NSError* error = nil;
+NSString *FIRCLSFIRAEventDictionaryToJSON(NSDictionary *eventAsDictionary) {
+  NSError *error = nil;
 
   if (eventAsDictionary == nil) {
     return nil;
@@ -123,12 +120,12 @@ NSString* FIRCLSFIRAEventDictionaryToJSON(NSDictionary* eventAsDictionary) {
     return nil;
   }
 
-  NSData* jsonData = [NSJSONSerialization dataWithJSONObject:eventAsDictionary
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:eventAsDictionary
                                                      options:0
                                                        error:&error];
 
   if (error == nil) {
-    NSString* json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return json;
   } else {
     FIRCLSSDKLog("Unable to convert Firebase Analytics event to json");
