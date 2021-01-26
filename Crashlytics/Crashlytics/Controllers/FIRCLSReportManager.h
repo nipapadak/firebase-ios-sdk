@@ -14,9 +14,9 @@
 
 #import <Foundation/Foundation.h>
 
-#include "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
-#include "Crashlytics/Crashlytics/Helpers/FIRCLSProfiling.h"
-#include "Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRCrashlytics.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSProfiling.h"
+#import "Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRCrashlytics.h"
 
 @class FBLPromise<T>;
 @class FIRCLSExistingReportManager;

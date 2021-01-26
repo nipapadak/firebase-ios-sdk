@@ -18,16 +18,16 @@
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
-#include "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
-#include "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
-#include "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
-#include "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
-#include "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
-#include "Crashlytics/Shared/FIRCLSConstants.h"
+#import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
+#import "Crashlytics/Shared/FIRCLSConstants.h"
 #import "Crashlytics/UnitTests/Mocks/FABMockApplicationIdentifierModel.h"
-#include "Crashlytics/UnitTests/Mocks/FIRCLSMockSettings.h"
-#include "Crashlytics/UnitTests/Mocks/FIRCLSTempMockFileManager.h"
-#include "Crashlytics/UnitTests/Mocks/FIRMockGDTCoreTransport.h"
+#import "Crashlytics/UnitTests/Mocks/FIRCLSMockSettings.h"
+#import "Crashlytics/UnitTests/Mocks/FIRCLSTempMockFileManager.h"
+#import "Crashlytics/UnitTests/Mocks/FIRMockGDTCoreTransport.h"
 
 NSString *const TestEndpoint = @"https://reports.crashlytics.com";
 
