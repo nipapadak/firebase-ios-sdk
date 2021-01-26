@@ -41,8 +41,8 @@
 #import "Crashlytics/Shared/FIRCLSFABHost.h"
 
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSNotificationManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
@@ -128,18 +128,18 @@ NSString *const FIRCLSGoogleTransportMappingID = @"1206";
                                                                 appIDModel:appModel];
 
     _managerData = [[FIRCLSManagerData alloc] initWithGoogleAppID:_googleAppID
-                                                        googleTransport:googleTransport
-                                                          installations:installations
-                                                              analytics:analytics
-                                                            fileManager:_fileManager
-                                                            dataArbiter:_dataArbiter
-                                                               settings:settings];
+                                                  googleTransport:googleTransport
+                                                    installations:installations
+                                                        analytics:analytics
+                                                      fileManager:_fileManager
+                                                      dataArbiter:_dataArbiter
+                                                         settings:settings];
 
     _reportUploader = [[FIRCLSReportUploader alloc] initWithManagerData:_managerData];
 
     _existingReportManager =
         [[FIRCLSExistingReportManager alloc] initWithManagerData:_managerData
-                                                     reportUploader:_reportUploader];
+                                                  reportUploader:_reportUploader];
 
     _analyticsManager = [[FIRCLSAnalyticsManager alloc] initWithAnalytics:analytics];
 

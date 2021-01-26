@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FIRCLSExistingReportManager : NSObject
 
 - (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
-                        reportUploader:(FIRCLSReportUploader *)reportUploader;
+                     reportUploader:(FIRCLSReportUploader *)reportUploader;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

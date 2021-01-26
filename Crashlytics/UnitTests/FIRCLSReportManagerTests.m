@@ -24,10 +24,9 @@
 #endif
 
 #include "Crashlytics/Crashlytics/Components/FIRCLSContext.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
 #include "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
@@ -90,25 +89,23 @@
 
   FIRCLSManagerData *managerData =
       [[FIRCLSManagerData alloc] initWithGoogleAppID:TEST_GOOGLE_APP_ID
-                                        googleTransport:mockGoogleTransport
-                                          installations:iid
-                                              analytics:nil
-                                            fileManager:self.fileManager
-                                            dataArbiter:self.dataArbiter
-                                               settings:self.mockSettings];
+                                     googleTransport:mockGoogleTransport
+                                       installations:iid
+                                           analytics:nil
+                                         fileManager:self.fileManager
+                                         dataArbiter:self.dataArbiter
+                                            settings:self.mockSettings];
 
-  self.mockReportUploader =
-      [[FIRCLSMockReportUploader alloc] initWithManagerData:managerData];
+  self.mockReportUploader = [[FIRCLSMockReportUploader alloc] initWithManagerData:managerData];
 
   FIRCLSExistingReportManager *existingReportManager =
       [[FIRCLSExistingReportManager alloc] initWithManagerData:managerData
-                                                   reportUploader:self.mockReportUploader];
+                                                reportUploader:self.mockReportUploader];
   FIRCLSAnalyticsManager *analyticsManager = [[FIRCLSAnalyticsManager alloc] initWithAnalytics:nil];
 
-  self.reportManager =
-      [[FIRCLSMockReportManager alloc] initWithManagerData:managerData
-                                     existingReportManager:existingReportManager
-                                          analyticsManager:analyticsManager];
+  self.reportManager = [[FIRCLSMockReportManager alloc] initWithManagerData:managerData
+                                                      existingReportManager:existingReportManager
+                                                           analyticsManager:analyticsManager];
 }
 
 - (void)tearDown {

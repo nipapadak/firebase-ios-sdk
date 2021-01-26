@@ -59,12 +59,12 @@ NSString *const TestEndpoint = @"https://reports.crashlytics.com";
   self.fileManager = [[FIRCLSTempMockFileManager alloc] init];
 
   self.managerData = [[FIRCLSManagerData alloc] initWithGoogleAppID:@"someGoogleAppId"
-                                                          googleTransport:self.mockDataTransport
-                                                            installations:nil
-                                                                analytics:nil
-                                                              fileManager:self.fileManager
-                                                              dataArbiter:nil
-                                                                 settings:self.mockSettings];
+                                                    googleTransport:self.mockDataTransport
+                                                      installations:nil
+                                                          analytics:nil
+                                                        fileManager:self.fileManager
+                                                        dataArbiter:nil
+                                                           settings:self.mockSettings];
 
   self.uploader = [[FIRCLSReportUploader alloc] initWithManagerData:_managerData];
 }

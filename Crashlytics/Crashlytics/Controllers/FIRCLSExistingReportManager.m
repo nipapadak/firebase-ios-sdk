@@ -29,7 +29,7 @@
 @implementation FIRCLSExistingReportManager
 
 - (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
-                        reportUploader:(FIRCLSReportUploader *)reportUploader {
+                     reportUploader:(FIRCLSReportUploader *)reportUploader {
   self = [super init];
   if (!self) {
     return nil;

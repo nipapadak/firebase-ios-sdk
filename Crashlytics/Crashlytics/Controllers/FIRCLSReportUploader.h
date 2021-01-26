@@ -23,8 +23,7 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
-    NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData NS_DESIGNATED_INITIALIZER;
 
 @property(nonatomic, readonly) NSOperationQueue *operationQueue;
 @property(nonatomic, readonly) FIRCLSFileManager *fileManager;
