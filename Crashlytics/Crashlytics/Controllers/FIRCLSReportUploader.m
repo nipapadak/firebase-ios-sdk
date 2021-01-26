@@ -46,17 +46,17 @@
 
 @implementation FIRCLSReportUploader
 
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData {
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData {
   self = [super init];
   if (!self) {
     return nil;
   }
 
-  _operationQueue = controllerData.operationQueue;
-  _googleAppID = controllerData.googleAppID;
-  _googleTransport = controllerData.googleTransport;
-  _fileManager = controllerData.fileManager;
-  _analytics = controllerData.analytics;
+  _operationQueue = managerData.operationQueue;
+  _googleAppID = managerData.googleAppID;
+  _googleTransport = managerData.googleTransport;
+  _fileManager = managerData.fileManager;
+  _analytics = managerData.analytics;
 
   return self;
 }

@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "FIRCLSLaunchMarker.h"
+#import "FIRCLSLaunchMarkerModel.h"
 
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSInternalLogging.h"
 
-@interface FIRCLSLaunchMarker ()
+@interface FIRCLSLaunchMarkerModel ()
 
 @property(nonatomic, strong) FIRCLSFileManager *fileManager;
 
 @end
 
-@implementation FIRCLSLaunchMarker
+@implementation FIRCLSLaunchMarkerModel
 
 - (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager {
   self = [super init];

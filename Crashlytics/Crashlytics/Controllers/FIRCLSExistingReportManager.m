@@ -28,15 +28,15 @@
 
 @implementation FIRCLSExistingReportManager
 
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
                         reportUploader:(FIRCLSReportUploader *)reportUploader {
   self = [super init];
   if (!self) {
     return nil;
   }
 
-  _fileManager = controllerData.fileManager;
-  _operationQueue = controllerData.operationQueue;
+  _fileManager = managerData.fileManager;
+  _operationQueue = managerData.operationQueue;
   _reportUploader = reportUploader;
 
   return self;

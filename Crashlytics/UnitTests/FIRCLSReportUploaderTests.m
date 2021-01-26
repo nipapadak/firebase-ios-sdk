@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
@@ -36,7 +36,7 @@ NSString *const TestEndpoint = @"https://reports.crashlytics.com";
 @property(nonatomic, strong) FIRCLSReportUploader *uploader;
 @property(nonatomic, strong) FIRCLSTempMockFileManager *fileManager;
 @property(nonatomic, strong) NSOperationQueue *queue;
-@property(nonatomic, strong) FIRCLSControllerData *controllerData;
+@property(nonatomic, strong) FIRCLSManagerData *managerData;
 
 // Add mock prefix to names as there are naming conflicts with FIRCLSReportUploaderDelegate
 @property(nonatomic, strong) FIRMockGDTCORTransport *mockDataTransport;
@@ -58,7 +58,7 @@ NSString *const TestEndpoint = @"https://reports.crashlytics.com";
                                                                       target:kGDTCORTargetCSH];
   self.fileManager = [[FIRCLSTempMockFileManager alloc] init];
 
-  self.controllerData = [[FIRCLSControllerData alloc] initWithGoogleAppID:@"someGoogleAppId"
+  self.managerData = [[FIRCLSManagerData alloc] initWithGoogleAppID:@"someGoogleAppId"
                                                           googleTransport:self.mockDataTransport
                                                             installations:nil
                                                                 analytics:nil
@@ -66,7 +66,7 @@ NSString *const TestEndpoint = @"https://reports.crashlytics.com";
                                                               dataArbiter:nil
                                                                  settings:self.mockSettings];
 
-  self.uploader = [[FIRCLSReportUploader alloc] initWithControllerData:_controllerData];
+  self.uploader = [[FIRCLSReportUploader alloc] initWithManagerData:_managerData];
 }
 
 - (void)tearDown {

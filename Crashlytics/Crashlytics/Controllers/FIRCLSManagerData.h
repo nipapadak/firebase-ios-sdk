@@ -23,11 +23,22 @@ NS_ASSUME_NONNULL_BEGIN
 @class FIRCLSInstallIdentifierModel;
 @class FIRCLSExecutionIdentifierModel;
 @class FIRCLSSettings;
-@class FIRCLSLaunchMarker;
+@class FIRCLSLaunchMarkerModel;
 @class GDTCORTransport;
 @protocol FIRAnalyticsInterop;
 
-@interface FIRCLSControllerData : NSObject
+ /*
+  * Manager Data's purpose is to simplify the adding and removing of
+  * dependencies from each of the Manager classes so that it's easier
+  * to inject mock classes during testing. A lot of the Manager classes
+  * share these dependencies, but don't use all of them.
+  *
+  * If you plan on adding interdependencies between Managers, do not add a pointer
+  * to the dependency here. Instead add them as a new value to the constructor of
+  * the Manager, and construct them in FIRCrashlytics. This data structure should
+  * be for Models and other SDKs / Interops Crashlytics depends on.
+  */
+@interface FIRCLSManagerData : NSObject
 
 - (instancetype)initWithGoogleAppID:(NSString *)googleAppID
                     googleTransport:(GDTCORTransport *)googleTransport
@@ -64,9 +75,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Settings fetched from the server
 @property(nonatomic, strong) FIRCLSSettings *settings;
 
-@property(nonatomic, strong) dispatch_queue_t dispatchQueue;
-
+// These queues function together as a single startup queue
 @property(nonatomic, strong) NSOperationQueue *operationQueue;
+@property(nonatomic, strong) dispatch_queue_t dispatchQueue;
 
 @end
 

@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
 
@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FIRCLSExistingReportManager : NSObject
 
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
                         reportUploader:(FIRCLSReportUploader *)reportUploader;
 
 - (instancetype)init NS_UNAVAILABLE;

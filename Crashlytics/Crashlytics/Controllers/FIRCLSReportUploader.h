@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
 
 @class FIRCLSDataCollectionToken;
 @class FIRCLSInternalReport;
@@ -23,7 +23,7 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
     NS_DESIGNATED_INITIALIZER;
 
 @property(nonatomic, readonly) NSOperationQueue *operationQueue;

@@ -14,7 +14,7 @@
 
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
-#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarker.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarkerModel.h"
 
 @class FIRCLSInstallIdentifierModel;
 
@@ -27,7 +27,7 @@
 
 @interface FIRCLSReportManager (PrivateMethods)
 
-@property(nonatomic, strong) FIRCLSLaunchMarker *launchMarker;
+@property(nonatomic, strong) FIRCLSLaunchMarkerModel *launchMarker;
 
 - (BOOL)potentiallySubmittableCrashOccurred;
 

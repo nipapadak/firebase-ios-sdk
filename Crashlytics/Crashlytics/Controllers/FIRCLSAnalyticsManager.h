@@ -22,23 +22,33 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FIRAnalyticsInterop;
 @protocol FIRAnalyticsInteropListener;
 
+/*
+ * Registers a listener for Analytics events in Crashlytics
+ * logs (aka. breadcrumbs), and sends events to the
+ * Analytics SDK for Crash Free Users.
+ */
 @interface FIRCLSAnalyticsManager : NSObject
 
 - (instancetype)initWithAnalytics:(nullable id<FIRAnalyticsInterop>)analytics;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-/**
+/*
  * Starts listening for Analytics events for Breadcrumbs.
  */
 - (void)registerAnalyticsListener;
 
-/**
+/*
  * Logs a Crashlytics crash session to Firebase Analytics for Crash Free Users.
  * @param crashTimeStamp The time stamp of the crash to be logged.
  */
 + (void)logCrashWithTimeStamp:(NSTimeInterval)crashTimeStamp
                   toAnalytics:(id<FIRAnalyticsInterop>)analytics;
+
+/*
+ * Public for testing.
+ */
+NSString *FIRCLSFIRAEventDictionaryToJSON(NSDictionary *eventAsDictionary);
 
 @end
 

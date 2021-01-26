@@ -18,7 +18,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FIRCLSLaunchMarker : NSObject
+/*
+ * Writes a file during startup, and deletes it at the end. Existence
+ * of this file on the next run means there was a crash at launch,
+ * because the file wasn't deleted. This is used to make Crashlytics
+ * block startup on uploading the crash.
+ */
+@interface FIRCLSLaunchMarkerModel : NSObject
 
 - (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager;
 

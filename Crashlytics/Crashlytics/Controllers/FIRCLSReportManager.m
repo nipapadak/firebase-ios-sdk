@@ -50,7 +50,7 @@
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSLogger.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
-#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarker.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSLaunchMarkerModel.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSymbolResolver.h"
 #import "Crashlytics/Crashlytics/Operations/Reports/FIRCLSProcessReportOperation.h"
@@ -125,67 +125,49 @@ typedef NSNumber FIRCLSWrappedBool;
 }
 
 @property(nonatomic, readonly) NSString *googleAppID;
-
 @property(nonatomic, strong) GDTCORTransport *googleTransport;
 
 @property(nonatomic, strong) FIRCLSDataCollectionArbiter *dataArbiter;
+@property(nonatomic, strong) FIRCLSSettings *settings;
+@property(nonatomic, strong) FIRCLSLaunchMarkerModel *launchMarker;
 
-// Uniquely identifies a build / binary of the app
 @property(nonatomic, strong) FIRCLSApplicationIdentifierModel *appIDModel;
-
-// Uniquely identifies an install of the app
 @property(nonatomic, strong) FIRCLSInstallIdentifierModel *installIDModel;
-
-// Uniquely identifies a run of the app
 @property(nonatomic, strong) FIRCLSExecutionIdentifierModel *executionIDModel;
 
-// Settings fetched from the server
-@property(nonatomic, strong) FIRCLSSettings *settings;
-
-// Runs the operations that fetch settings
-@property(nonatomic, strong) FIRCLSSettingsManager *settingsManager;
-
-// Registers a listener for breadcrumbs
 @property(nonatomic, strong) FIRCLSAnalyticsManager *analyticsManager;
-
-// Registers notification observers for orientation and background status
-@property(nonatomic, strong) FIRCLSNotificationManager *notificationManager;
-
-// Handles the processing and uploading of reports from previous runs of the app
 @property(nonatomic, strong) FIRCLSExistingReportManager *existingReportManager;
 
-// Writes a file during launch, and deletes it at the end. Existence
-// of this file on the next run means there was a crash at launch, and
-// Crashlytics should block startup on uploading the crash.
-@property(nonatomic, strong) FIRCLSLaunchMarker *launchMarker;
+// Internal Managers
+@property(nonatomic, strong) FIRCLSSettingsManager *settingsManager;
+@property(nonatomic, strong) FIRCLSNotificationManager *notificationManager;
 
 @end
 
 @implementation FIRCLSReportManager
 
-// Used only for internal data collection E2E testing
-static void (^reportSentCallback)(void);
-
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
-                 existingReportManager:(FIRCLSExistingReportManager *)existingReportManager {
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData
+              existingReportManager:(FIRCLSExistingReportManager *)existingReportManager
+                   analyticsManager:(FIRCLSAnalyticsManager *)analyticsManager {
   self = [super init];
   if (!self) {
     return nil;
   }
 
-  _fileManager = controllerData.fileManager;
-  _analytics = controllerData.analytics;
-  _googleAppID = [controllerData.googleAppID copy];
-  _dataArbiter = controllerData.dataArbiter;
-  _googleTransport = controllerData.googleTransport;
-  _operationQueue = controllerData.operationQueue;
-  _dispatchQueue = controllerData.dispatchQueue;
-  _appIDModel = controllerData.appIDModel;
-  _installIDModel = controllerData.installIDModel;
-  _settings = controllerData.settings;
-  _executionIDModel = controllerData.executionIDModel;
+  _fileManager = managerData.fileManager;
+  _analytics = managerData.analytics;
+  _googleAppID = [managerData.googleAppID copy];
+  _dataArbiter = managerData.dataArbiter;
+  _googleTransport = managerData.googleTransport;
+  _operationQueue = managerData.operationQueue;
+  _dispatchQueue = managerData.dispatchQueue;
+  _appIDModel = managerData.appIDModel;
+  _installIDModel = managerData.installIDModel;
+  _settings = managerData.settings;
+  _executionIDModel = managerData.executionIDModel;
 
   _existingReportManager = existingReportManager;
+  _analyticsManager = analyticsManager;
 
   _unsentReportsAvailable = [FBLPromise pendingPromise];
   _reportActionProvided = [FBLPromise pendingPromise];
@@ -199,10 +181,9 @@ static void (^reportSentCallback)(void);
                                                            fileManager:self.fileManager
                                                            googleAppID:self.googleAppID];
 
-  _analyticsManager = [[FIRCLSAnalyticsManager alloc] initWithAnalytics:_analytics];
   _notificationManager = [[FIRCLSNotificationManager alloc] init];
 
-  _launchMarker = [[FIRCLSLaunchMarker alloc] initWithFileManager:_fileManager];
+  _launchMarker = [[FIRCLSLaunchMarkerModel alloc] initWithFileManager:_fileManager];
 
   return self;
 }

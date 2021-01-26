@@ -15,7 +15,6 @@
 #import "FIRCLSAnalyticsManager.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSUserLogging.h"
-#import "Crashlytics/Crashlytics/Helpers/FIRAEvent+Internal.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSInternalLogging.h"
 
 #import "Interop/Analytics/Public/FIRAnalyticsInterop.h"

@@ -26,8 +26,8 @@
 
 @implementation FIRCLSMockReportUploader
 
-- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData {
-  self = [super initWithControllerData:controllerData];
+- (instancetype)initWithManagerData:(FIRCLSManagerData *)managerData {
+  self = [super initWithManagerData:managerData];
   if (!self) {
     return nil;
   }
