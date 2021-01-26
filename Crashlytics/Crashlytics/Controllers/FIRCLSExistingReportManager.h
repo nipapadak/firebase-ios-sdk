@@ -14,11 +14,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
-#import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class FIRCLSManagerData;
+@class FIRCLSReportUploader;
+@class FIRCLSDataCollectionToken;
 
 @interface FIRCLSExistingReportManager : NSObject
 

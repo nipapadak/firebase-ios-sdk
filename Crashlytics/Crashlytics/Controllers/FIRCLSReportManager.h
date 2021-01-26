@@ -14,13 +14,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
-#import "Crashlytics/Crashlytics/Helpers/FIRCLSProfiling.h"
 #import "Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRCrashlytics.h"
+
+#import "Crashlytics/Crashlytics/Helpers/FIRCLSProfiling.h"
 
 @class FBLPromise<T>;
 @class FIRCLSExistingReportManager;
 @class FIRCLSAnalyticsManager;
+@class FIRCLSManagerData;
 
 NS_ASSUME_NONNULL_BEGIN
 

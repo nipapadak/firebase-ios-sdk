@@ -14,10 +14,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSManagerData.h"
-
 @class FIRCLSDataCollectionToken;
 @class FIRCLSInternalReport;
+@class FIRCLSManagerData;
+@class FIRCLSFileManager;
 
 @interface FIRCLSReportUploader : NSObject
 
