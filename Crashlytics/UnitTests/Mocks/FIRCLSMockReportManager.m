@@ -14,8 +14,8 @@
 
 #import "Crashlytics/UnitTests/Mocks/FIRCLSMockReportManager.h"
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 #import "Crashlytics/Crashlytics/Components/FIRCLSContext.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 #import "Crashlytics/UnitTests/Mocks/FIRCLSMockReportUploader.h"
 
 #import "FirebaseInstallations/Source/Library/Private/FirebaseInstallationsInternal.h"
@@ -54,9 +54,9 @@
   }
 
   _reportUploader = [[FIRCLSMockReportUploader alloc] initWithQueue:self.operationQueue
-                                                   dataSource:self
-                                                  fileManager:fileManager
-                                                    analytics:analytics];
+                                                         dataSource:self
+                                                        fileManager:fileManager
+                                                          analytics:analytics];
   _mockReportUploader = _reportUploader;
 
   _existingReportManager =
