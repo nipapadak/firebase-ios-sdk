@@ -1,9 +1,16 @@
+// Copyright 2021 Google
 //
-//  FIRCLSControllerData.h
-//  Pods
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
-//  Created by Sam Edson on 1/26/21.
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 #import <Foundation/Foundation.h>
 
@@ -56,11 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Settings fetched from the server
 @property(nonatomic, strong) FIRCLSSettings *settings;
-
-// Writes a file during launch, and deletes it at the end. Existence
-// of this file on the next run means there was a crash at launch, and
-// Crashlytics should block startup on uploading the crash.
-@property(nonatomic, strong) FIRCLSLaunchMarker *launchMarker;
 
 @property(nonatomic, strong) dispatch_queue_t dispatchQueue;
 

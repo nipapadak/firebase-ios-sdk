@@ -106,7 +106,6 @@
   self.reportManager =
       [[FIRCLSMockReportManager alloc] initWithControllerData:controllerData
                                         existingReportManager:existingReportManager];
-  self.reportManager.bundleIdentifier = TEST_BUNDLE_ID;
 }
 
 - (void)tearDown {
