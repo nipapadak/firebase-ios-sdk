@@ -14,13 +14,16 @@
 
 #import "Crashlytics/UnitTests/Mocks/FIRCLSMockReportManager.h"
 
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 #import "Crashlytics/Crashlytics/Components/FIRCLSContext.h"
 #import "Crashlytics/UnitTests/Mocks/FIRCLSMockReportUploader.h"
 
 #import "FirebaseInstallations/Source/Library/Private/FirebaseInstallationsInternal.h"
 
 @interface FIRCLSMockReportManager () {
-  FIRCLSMockReportUploader *_uploader;
+  FIRCLSMockReportUploader *_reportUploader;
+  FIRCLSExistingReportManager *_existingReportManager;
+  NSOperationQueue *_operationQueue;
 }
 
 @end
@@ -50,16 +53,18 @@
     return nil;
   }
 
-  _uploader = [[FIRCLSMockReportUploader alloc] initWithQueue:self.operationQueue
+  _reportUploader = [[FIRCLSMockReportUploader alloc] initWithQueue:self.operationQueue
                                                    dataSource:self
                                                   fileManager:fileManager
                                                     analytics:analytics];
+  _mockReportUploader = _reportUploader;
+
+  _existingReportManager =
+      [[FIRCLSExistingReportManager alloc] initWithFileManager:fileManager
+                                                operationQueue:_operationQueue
+                                                reportUploader:_reportUploader];
 
   return self;
-}
-
-- (FIRCLSReportUploader *)reportUploader {
-  return _uploader;
 }
 
 - (BOOL)startCrashReporterWithProfilingMark:(FIRCLSProfileMark)mark

@@ -223,6 +223,8 @@ static void (^reportSentCallback)(void);
                                                 operationQueue:_operationQueue
                                                 reportUploader:_reportUploader];
 
+  _launchMarker = [[FIRCLSLaunchMarker alloc] initWithFileManager:_fileManager];
+
   return self;
 }
 
@@ -516,7 +518,7 @@ static void (^reportSentCallback)(void);
 }
 
 - (FIRCLSInternalReport *)setupCurrentReport:(NSString *)executionIdentifier {
-  [self createLaunchFailureMarker];
+  [self.launchMarker createLaunchFailureMarker];
 
   NSString *reportPath = [_fileManager setupNewPathForExecutionIdentifier:executionIdentifier];
 

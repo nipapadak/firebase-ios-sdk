@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 
 - (BOOL)checkForAndCreateLaunchMarker;
+- (BOOL)createLaunchFailureMarker;
 - (BOOL)removeLaunchFailureMarker;
 
 @end
