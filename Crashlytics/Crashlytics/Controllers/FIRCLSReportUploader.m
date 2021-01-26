@@ -16,9 +16,9 @@
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
-#import "Crashlytics/Crashlytics/Helpers/FIRCLSFCRAnalytics.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInstallIdentifierModel.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
@@ -132,7 +132,7 @@
         //   2) In the past we did try to check for success, but it was a useless check because
         //      sendDataEvent is async (unless we're sending urgently).
         if (isCrash) {
-          [FIRCLSFCRAnalytics logCrashWithTimeStamp:report.crashedOnDate.timeIntervalSince1970
+          [FIRCLSAnalyticsManager logCrashWithTimeStamp:report.crashedOnDate.timeIntervalSince1970
                                         toAnalytics:self->_analytics];
         }
       });
