@@ -14,9 +14,9 @@
 
 #import <Foundation/Foundation.h>
 
+#include "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
 #include "Crashlytics/Crashlytics/Helpers/FIRCLSProfiling.h"
 #include "Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRCrashlytics.h"
-#include "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
 
 @class FBLPromise<T>;
 @class FIRCLSExistingReportManager;
@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FIRCLSReportManager : NSObject
 
 - (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
-                 existingReportManager:(FIRCLSExistingReportManager *)existingReportManager NS_DESIGNATED_INITIALIZER;
+                 existingReportManager:(FIRCLSExistingReportManager *)existingReportManager
+    NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 

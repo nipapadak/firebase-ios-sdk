@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
 #include "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
@@ -36,7 +36,7 @@ NSString *const TestEndpoint = @"https://reports.crashlytics.com";
 @property(nonatomic, strong) FIRCLSReportUploader *uploader;
 @property(nonatomic, strong) FIRCLSTempMockFileManager *fileManager;
 @property(nonatomic, strong) NSOperationQueue *queue;
-@property(nonatomic, strong) FIRCLSControllerData* controllerData;
+@property(nonatomic, strong) FIRCLSControllerData *controllerData;
 
 // Add mock prefix to names as there are naming conflicts with FIRCLSReportUploaderDelegate
 @property(nonatomic, strong) FIRMockGDTCORTransport *mockDataTransport;

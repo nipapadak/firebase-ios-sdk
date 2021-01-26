@@ -161,8 +161,8 @@
     return;
   }
 
-  FIRCLSReportAdapter *adapter =
-      [[FIRCLSReportAdapter alloc] initWithPath:path googleAppId:self.googleAppID];
+  FIRCLSReportAdapter *adapter = [[FIRCLSReportAdapter alloc] initWithPath:path
+                                                               googleAppId:self.googleAppID];
 
   GDTCOREvent *event = [self.googleTransport eventForTransport];
   event.dataObject = adapter;

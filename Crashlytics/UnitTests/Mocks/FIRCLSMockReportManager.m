@@ -22,7 +22,7 @@
 
 @interface FIRCLSMockReportManager () {
   FIRCLSMockReportUploader *_reportUploader;
-//  FIRCLSExistingReportManager *_existingReportManager;
+  //  FIRCLSExistingReportManager *_existingReportManager;
 }
 
 @end

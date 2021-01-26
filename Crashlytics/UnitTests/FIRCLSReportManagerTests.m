@@ -24,13 +24,13 @@
 #endif
 
 #include "Crashlytics/Crashlytics/Components/FIRCLSContext.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
 #include "Crashlytics/Crashlytics/Helpers/FIRAEvent+Internal.h"
 #include "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 
 #import "Crashlytics/Crashlytics/Settings/Models/FIRCLSApplicationIdentifierModel.h"
 #import "Crashlytics/UnitTests/Mocks/FABMockApplicationIdentifierModel.h"
@@ -81,20 +81,31 @@
 
   FIRMockInstallations *iid = [[FIRMockInstallations alloc] initWithFID:@"test_token"];
 
-  FIRMockGDTCORTransport *mockGoogleTransport = [[FIRMockGDTCORTransport alloc] initWithMappingID:@"id"
-                                                                           transformers:nil
-                                                                                 target:0];
+  FIRMockGDTCORTransport *mockGoogleTransport =
+      [[FIRMockGDTCORTransport alloc] initWithMappingID:@"id" transformers:nil target:0];
   self.appIDModel = [[FIRCLSApplicationIdentifierModel alloc] init];
   self.mockSettings = [[FIRCLSMockSettings alloc] initWithFileManager:self.fileManager
-                                                       appIDModel:self.appIDModel];
+                                                           appIDModel:self.appIDModel];
 
-  FIRCLSControllerData *controllerData = [[FIRCLSControllerData alloc] initWithGoogleAppID:TEST_GOOGLE_APP_ID googleTransport:mockGoogleTransport installations:iid analytics:nil fileManager:self.fileManager dataArbiter:self.dataArbiter settings:self.mockSettings];
+  FIRCLSControllerData *controllerData =
+      [[FIRCLSControllerData alloc] initWithGoogleAppID:TEST_GOOGLE_APP_ID
+                                        googleTransport:mockGoogleTransport
+                                          installations:iid
+                                              analytics:nil
+                                            fileManager:self.fileManager
+                                            dataArbiter:self.dataArbiter
+                                               settings:self.mockSettings];
 
-  self.mockReportUploader = [[FIRCLSMockReportUploader alloc] initWithControllerData:controllerData];
+  self.mockReportUploader =
+      [[FIRCLSMockReportUploader alloc] initWithControllerData:controllerData];
 
-  FIRCLSExistingReportManager *existingReportManager = [[FIRCLSExistingReportManager alloc] initWithControllerData:controllerData reportUploader:self.mockReportUploader];
+  FIRCLSExistingReportManager *existingReportManager =
+      [[FIRCLSExistingReportManager alloc] initWithControllerData:controllerData
+                                                   reportUploader:self.mockReportUploader];
 
-  self.reportManager = [[FIRCLSMockReportManager alloc] initWithControllerData:controllerData existingReportManager:existingReportManager];
+  self.reportManager =
+      [[FIRCLSMockReportManager alloc] initWithControllerData:controllerData
+                                        existingReportManager:existingReportManager];
   self.reportManager.bundleIdentifier = TEST_BUNDLE_ID;
 }
 

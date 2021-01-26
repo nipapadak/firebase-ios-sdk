@@ -40,11 +40,11 @@
 #import "Crashlytics/Shared/FIRCLSConstants.h"
 #import "Crashlytics/Shared/FIRCLSFABHost.h"
 
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSAnalyticsManager.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSNotificationManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSNotificationManager.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSReportManager.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
 
 #import "FirebaseCore/Sources/Private/FirebaseCoreInternal.h"
@@ -119,9 +119,10 @@ NSString *const FIRCLSGoogleTransportMappingID = @"1206";
     FIRCLSDeveloperLog("Crashlytics", @"Running on %@, %@ (%@)", FIRCLSHostModelInfo(),
                        FIRCLSHostOSDisplayVersion(), FIRCLSHostOSBuildVersion());
 
-    GDTCORTransport *googleTransport = [[GDTCORTransport alloc] initWithMappingID:FIRCLSGoogleTransportMappingID
-                                                     transformers:nil
-                                                           target:kGDTCORTargetCSH];
+    GDTCORTransport *googleTransport =
+        [[GDTCORTransport alloc] initWithMappingID:FIRCLSGoogleTransportMappingID
+                                      transformers:nil
+                                            target:kGDTCORTargetCSH];
 
     _fileManager = [[FIRCLSFileManager alloc] init];
     _googleAppID = app.options.googleAppID;
@@ -131,14 +132,22 @@ NSString *const FIRCLSGoogleTransportMappingID = @"1206";
     FIRCLSSettings *settings = [[FIRCLSSettings alloc] initWithFileManager:_fileManager
                                                                 appIDModel:appModel];
 
-    _controllerData = [[FIRCLSControllerData alloc] initWithGoogleAppID:_googleAppID googleTransport:googleTransport installations:installations analytics:analytics fileManager:_fileManager dataArbiter:_dataArbiter settings:settings];
+    _controllerData = [[FIRCLSControllerData alloc] initWithGoogleAppID:_googleAppID
+                                                        googleTransport:googleTransport
+                                                          installations:installations
+                                                              analytics:analytics
+                                                            fileManager:_fileManager
+                                                            dataArbiter:_dataArbiter
+                                                               settings:settings];
 
     _reportUploader = [[FIRCLSReportUploader alloc] initWithControllerData:_controllerData];
 
     _existingReportManager =
-        [[FIRCLSExistingReportManager alloc] initWithControllerData:_controllerData reportUploader:_reportUploader];
+        [[FIRCLSExistingReportManager alloc] initWithControllerData:_controllerData
+                                                     reportUploader:_reportUploader];
 
-    _reportManager = [[FIRCLSReportManager alloc] initWithControllerData:_controllerData existingReportManager:_existingReportManager];
+    _reportManager = [[FIRCLSReportManager alloc] initWithControllerData:_controllerData
+                                                   existingReportManager:_existingReportManager];
 
     // Process did crash during previous execution
     NSString *crashedMarkerFileName = [NSString stringWithUTF8String:FIRCLSCrashedMarkerFileName];

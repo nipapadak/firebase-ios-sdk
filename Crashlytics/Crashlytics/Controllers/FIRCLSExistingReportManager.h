@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
-#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
