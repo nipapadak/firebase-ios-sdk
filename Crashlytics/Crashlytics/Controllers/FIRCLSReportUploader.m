@@ -16,14 +16,12 @@
 
 #import "Crashlytics/Crashlytics/Components/FIRCLSApplication.h"
 #import "Crashlytics/Crashlytics/Controllers/FIRCLSReportUploader_Private.h"
-#import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionArbiter.h"
 #import "Crashlytics/Crashlytics/DataCollection/FIRCLSDataCollectionToken.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSFCRAnalytics.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInstallIdentifierModel.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
-#import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSymbolResolver.h"
 #import "Crashlytics/Crashlytics/Models/Record/FIRCLSReportAdapter.h"
 #import "Crashlytics/Crashlytics/Operations/Reports/FIRCLSProcessReportOperation.h"
@@ -39,23 +37,26 @@
 @interface FIRCLSReportUploader () {
   id<FIRAnalyticsInterop> _analytics;
 }
+
+@property(nonatomic, strong) GDTCORTransport *googleTransport;
+
+@property(nonatomic, readonly) NSString *googleAppID;
+
 @end
 
 @implementation FIRCLSReportUploader
 
-- (instancetype)initWithQueue:(NSOperationQueue *)queue
-                   dataSource:(id<FIRCLSReportUploaderDataSource>)dataSource
-                  fileManager:(FIRCLSFileManager *)fileManager
-                    analytics:(id<FIRAnalyticsInterop>)analytics {
+- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData {
   self = [super init];
   if (!self) {
     return nil;
   }
 
-  _operationQueue = queue;
-  _dataSource = dataSource;
-  _fileManager = fileManager;
-  _analytics = analytics;
+  _operationQueue = controllerData.operationQueue;
+  _googleAppID = controllerData.googleAppID;
+  _googleTransport = controllerData.googleTransport;
+  _fileManager = controllerData.fileManager;
+  _analytics = controllerData.analytics;
 
   return self;
 }
@@ -161,15 +162,15 @@
   }
 
   FIRCLSReportAdapter *adapter =
-      [[FIRCLSReportAdapter alloc] initWithPath:path googleAppId:self.dataSource.googleAppID];
+      [[FIRCLSReportAdapter alloc] initWithPath:path googleAppId:self.googleAppID];
 
-  GDTCOREvent *event = [self.dataSource.googleTransport eventForTransport];
+  GDTCOREvent *event = [self.googleTransport eventForTransport];
   event.dataObject = adapter;
   event.qosTier = GDTCOREventQoSFast;  // Bypass batching, send immediately
 
   dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 
-  [self.dataSource.googleTransport
+  [self.googleTransport
       sendDataEvent:event
          onComplete:^(BOOL wasWritten, NSError *error) {
            if (!wasWritten) {

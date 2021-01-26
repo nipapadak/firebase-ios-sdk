@@ -22,20 +22,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FIRCLSMockReportManager : FIRCLSReportManager
 
-- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
-                      installations:(FIRInstallations *)installations
-                          analytics:(nullable id<FIRAnalyticsInterop>)analytics
-                        googleAppID:(nonnull NSString *)googleAppID
-                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter
-                    googleTransport:(GDTCORTransport *)googleTransport
-                         appIDModel:(FIRCLSApplicationIdentifierModel *)appIDModel
-                           settings:(FIRCLSSettings *)settings NS_DESIGNATED_INITIALIZER;
-
-- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
-                      installations:(FIRInstallations *)instanceID
-                          analytics:(nullable id<FIRAnalyticsInterop>)analytics
-                        googleAppID:(NSString *)googleAppID
-                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter NS_UNAVAILABLE;
+//- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
+//                      installations:(FIRInstallations *)installations
+//                          analytics:(nullable id<FIRAnalyticsInterop>)analytics
+//                        googleAppID:(nonnull NSString *)googleAppID
+//                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter
+//                    googleTransport:(GDTCORTransport *)googleTransport
+//                         appIDModel:(FIRCLSApplicationIdentifierModel *)appIDModel
+//                           settings:(FIRCLSSettings *)settings NS_DESIGNATED_INITIALIZER;
+//
+//- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
+//                      installations:(FIRInstallations *)instanceID
+//                          analytics:(nullable id<FIRAnalyticsInterop>)analytics
+//                        googleAppID:(NSString *)googleAppID
+//                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter NS_UNAVAILABLE;
 
 @property(nonatomic, copy) NSString *bundleIdentifier;
 @property(nonatomic, strong) FIRCLSMockReportUploader *mockReportUploader;

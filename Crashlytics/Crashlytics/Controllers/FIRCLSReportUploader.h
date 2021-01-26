@@ -14,26 +14,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+
 @class FIRCLSDataCollectionToken;
 @class FIRCLSInternalReport;
-@class FIRCLSSettings;
-@class FIRCLSFileManager;
-@class FIRCLSReportUploader;
-@class GDTCORTransport;
-
-@protocol FIRCLSReportUploaderDataSource;
-@protocol FIRAnalyticsInterop;
 
 @interface FIRCLSReportUploader : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-- (instancetype)initWithQueue:(NSOperationQueue *)queue
-                   dataSource:(id<FIRCLSReportUploaderDataSource>)dataSource
-                  fileManager:(FIRCLSFileManager *)fileManager
-                    analytics:(id<FIRAnalyticsInterop>)analytics NS_DESIGNATED_INITIALIZER;
-
-@property(nonatomic, weak) id<FIRCLSReportUploaderDataSource> dataSource;
+- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData NS_DESIGNATED_INITIALIZER;
 
 @property(nonatomic, readonly) NSOperationQueue *operationQueue;
 @property(nonatomic, readonly) FIRCLSFileManager *fileManager;
@@ -46,14 +36,5 @@
 - (void)uploadPackagedReportAtPath:(NSString *)path
                dataCollectionToken:(FIRCLSDataCollectionToken *)dataCollectionToken
                           asUrgent:(BOOL)urgent;
-
-@end
-
-@protocol FIRCLSReportUploaderDataSource <NSObject>
-@required
-
-- (NSString *)googleAppID;
-- (FIRCLSSettings *)settings;
-- (GDTCORTransport *)googleTransport;
 
 @end

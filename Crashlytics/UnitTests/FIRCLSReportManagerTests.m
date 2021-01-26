@@ -29,6 +29,8 @@
 #include "Crashlytics/Crashlytics/Helpers/FIRCLSDefines.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSSettings.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSControllerData.h"
+#import "Crashlytics/Crashlytics/Controllers/FIRCLSExistingReportManager.h"
 
 #import "Crashlytics/Crashlytics/Settings/Models/FIRCLSApplicationIdentifierModel.h"
 #import "Crashlytics/UnitTests/Mocks/FABMockApplicationIdentifierModel.h"
@@ -50,11 +52,13 @@
 
 @interface FIRCLSReportManagerTests : XCTestCase
 
-@property(nonatomic, strong) FIRCLSTempMockFileManager *fileManager;
 @property(nonatomic, strong) FIRCLSMockReportManager *reportManager;
+@property(nonatomic, strong) FIRCLSMockSettings *mockSettings;
+@property(nonatomic, strong) FIRCLSMockReportUploader *mockReportUploader;
+@property(nonatomic, strong) FIRCLSTempMockFileManager *fileManager;
+
 @property(nonatomic, strong) FIRCLSDataCollectionArbiter *dataArbiter;
 @property(nonatomic, strong) FIRCLSApplicationIdentifierModel *appIDModel;
-@property(nonatomic, strong) FIRCLSMockSettings *settings;
 
 @end
 
@@ -77,21 +81,20 @@
 
   FIRMockInstallations *iid = [[FIRMockInstallations alloc] initWithFID:@"test_token"];
 
-  FIRMockGDTCORTransport *transport = [[FIRMockGDTCORTransport alloc] initWithMappingID:@"id"
+  FIRMockGDTCORTransport *mockGoogleTransport = [[FIRMockGDTCORTransport alloc] initWithMappingID:@"id"
                                                                            transformers:nil
                                                                                  target:0];
   self.appIDModel = [[FIRCLSApplicationIdentifierModel alloc] init];
-  self.settings = [[FIRCLSMockSettings alloc] initWithFileManager:self.fileManager
+  self.mockSettings = [[FIRCLSMockSettings alloc] initWithFileManager:self.fileManager
                                                        appIDModel:self.appIDModel];
 
-  self.reportManager = [[FIRCLSMockReportManager alloc] initWithFileManager:self.fileManager
-                                                              installations:iid
-                                                                  analytics:nil
-                                                                googleAppID:TEST_GOOGLE_APP_ID
-                                                                dataArbiter:self.dataArbiter
-                                                            googleTransport:transport
-                                                                 appIDModel:self.appIDModel
-                                                                   settings:self.settings];
+  FIRCLSControllerData *controllerData = [[FIRCLSControllerData alloc] initWithGoogleAppID:TEST_GOOGLE_APP_ID googleTransport:mockGoogleTransport installations:iid analytics:nil fileManager:self.fileManager dataArbiter:self.dataArbiter settings:self.mockSettings];
+
+  self.mockReportUploader = [[FIRCLSMockReportUploader alloc] initWithControllerData:controllerData];
+
+  FIRCLSExistingReportManager *existingReportManager = [[FIRCLSExistingReportManager alloc] initWithControllerData:controllerData reportUploader:self.mockReportUploader];
+
+  self.reportManager = [[FIRCLSMockReportManager alloc] initWithControllerData:controllerData existingReportManager:existingReportManager];
   self.reportManager.bundleIdentifier = TEST_BUNDLE_ID;
 }
 
@@ -161,23 +164,11 @@
 
 #pragma mark - Property Helpers
 - (NSArray *)prepareAndSubmitReportArray {
-  return self.reportManager.mockReportUploader.prepareAndSubmitReportArray;
+  return self.mockReportUploader.prepareAndSubmitReportArray;
 }
 
 - (NSArray *)uploadReportArray {
-  return self.reportManager.mockReportUploader.uploadReportArray;
-}
-
-- (NSString *)installID {
-  return TEST_INSTALL_ID;
-}
-
-- (nonnull NSString *)bundleIdentifier {
-  return TEST_BUNDLE_ID;
-}
-
-- (nonnull NSString *)googleAppID {
-  return TEST_GOOGLE_APP_ID;
+  return self.mockReportUploader.uploadReportArray;
 }
 
 #pragma mark - File/Directory Handling

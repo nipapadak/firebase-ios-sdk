@@ -22,8 +22,7 @@
 
 @interface FIRCLSMockReportManager () {
   FIRCLSMockReportUploader *_reportUploader;
-  FIRCLSExistingReportManager *_existingReportManager;
-  NSOperationQueue *_operationQueue;
+//  FIRCLSExistingReportManager *_existingReportManager;
 }
 
 @end
@@ -33,39 +32,39 @@
 // these have to be synthesized, to override the pre-existing method
 @synthesize bundleIdentifier;
 
-- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
-                      installations:(FIRInstallations *)installations
-                          analytics:(id<FIRAnalyticsInterop>)analytics
-                        googleAppID:(NSString *)googleAppID
-                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter
-                    googleTransport:(GDTCORTransport *)googleTransport
-                         appIDModel:(FIRCLSApplicationIdentifierModel *)appIDModel
-                           settings:(FIRCLSSettings *)settings {
-  self = [super initWithFileManager:fileManager
-                      installations:installations
-                          analytics:analytics
-                        googleAppID:googleAppID
-                        dataArbiter:dataArbiter
-                    googleTransport:googleTransport
-                         appIDModel:appIDModel
-                           settings:settings];
-  if (!self) {
-    return nil;
-  }
-
-  _reportUploader = [[FIRCLSMockReportUploader alloc] initWithQueue:self.operationQueue
-                                                         dataSource:self
-                                                        fileManager:fileManager
-                                                          analytics:analytics];
-  _mockReportUploader = _reportUploader;
-
-  _existingReportManager =
-      [[FIRCLSExistingReportManager alloc] initWithFileManager:fileManager
-                                                operationQueue:_operationQueue
-                                                reportUploader:_reportUploader];
-
-  return self;
-}
+//- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
+//                      installations:(FIRInstallations *)installations
+//                          analytics:(id<FIRAnalyticsInterop>)analytics
+//                        googleAppID:(NSString *)googleAppID
+//                        dataArbiter:(FIRCLSDataCollectionArbiter *)dataArbiter
+//                    googleTransport:(GDTCORTransport *)googleTransport
+//                         appIDModel:(FIRCLSApplicationIdentifierModel *)appIDModel
+//                           settings:(FIRCLSSettings *)settings {
+//  self = [super initWithFileManager:fileManager
+//                      installations:installations
+//                          analytics:analytics
+//                        googleAppID:googleAppID
+//                        dataArbiter:dataArbiter
+//                    googleTransport:googleTransport
+//                         appIDModel:appIDModel
+//                           settings:settings];
+//  if (!self) {
+//    return nil;
+//  }
+//
+//  _reportUploader = [[FIRCLSMockReportUploader alloc] initWithQueue:self.operationQueue
+//                                                         dataSource:self
+//                                                        fileManager:fileManager
+//                                                          analytics:analytics];
+//  _mockReportUploader = _reportUploader;
+//
+//  self.existingReportManager =
+//      [[FIRCLSExistingReportManager alloc] initWithFileManager:fileManager
+//                                                operationQueue:self.operationQueue
+//                                                reportUploader:_reportUploader];
+//
+//  return self;
+//}
 
 - (BOOL)startCrashReporterWithProfilingMark:(FIRCLSProfileMark)mark
                                      report:(FIRCLSInternalReport *)report {

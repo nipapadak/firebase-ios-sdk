@@ -9,6 +9,7 @@
 
 #import "Crashlytics/Crashlytics/Helpers/FIRCLSLogger.h"
 #import "Crashlytics/Crashlytics/Models/FIRCLSInternalReport.h"
+#import "Crashlytics/Crashlytics/Models/FIRCLSFileManager.h"
 
 @interface FIRCLSExistingReportManager ()
 
@@ -20,16 +21,15 @@
 
 @implementation FIRCLSExistingReportManager
 
-- (instancetype)initWithFileManager:(FIRCLSFileManager *)fileManager
-                     operationQueue:(NSOperationQueue *)operationQueue
-                     reportUploader:(FIRCLSReportUploader *)reportUploader {
+- (instancetype)initWithControllerData:(FIRCLSControllerData *)controllerData
+                        reportUploader:(FIRCLSReportUploader *)reportUploader {
   self = [super init];
   if (!self) {
     return nil;
   }
 
-  _fileManager = fileManager;
-  _operationQueue = operationQueue;
+  _fileManager = controllerData.fileManager;
+  _operationQueue = controllerData.operationQueue;
   _reportUploader = reportUploader;
 
   return self;
