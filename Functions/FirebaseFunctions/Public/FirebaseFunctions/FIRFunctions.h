@@ -19,6 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class FIRApp;
 @class FIRHTTPSCallable;
 
+// NPK
+typedef void (^AuthDispositionBlock)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential);
+typedef void (^AuthChallengeBlock)(NSURLAuthenticationChallenge *challenge, AuthDispositionBlock dispositionBlock);
+
 /**
  * `FIRFunctions` is the client for Cloud Functions for a Firebase project.
  */
@@ -99,6 +103,8 @@ NS_SWIFT_NAME(Functions)
  */
 - (void)useEmulatorWithHost:(NSString *)host port:(NSInteger)port;
 
+// NPK
+- (void)setFetcherServiceChallengeBlock:(AuthChallengeBlock)challengeBlock;
 @end
 
 NS_ASSUME_NONNULL_END

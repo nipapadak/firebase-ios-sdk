@@ -350,6 +350,12 @@ NSString *const kFUNDefaultRegion = @"us-central1";
   return _region;
 }
 
+- (void)setFetcherServiceChallengeBlock:(AuthChallengeBlock)challengeBlock {
+    _fetcherService.challengeBlock = ^(GTMSessionFetcher *fetcher, NSURLAuthenticationChallenge *challenge, GTMSessionFetcherChallengeDispositionBlock dispositionBlock) {
+                                                  challengeBlock(challenge, dispositionBlock);
+                                      };
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
